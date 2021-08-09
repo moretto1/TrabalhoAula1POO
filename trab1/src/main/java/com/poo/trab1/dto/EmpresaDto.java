@@ -1,33 +1,30 @@
-package com.poo.trab1.entity;
+package com.poo.trab1.dto;
 
+import com.poo.trab1.entity.Funcionario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-@Entity
-@Table(name = "EMPRESA")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Empresa {
+public class EmpresaDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NOME")
+    @NotBlank(message = "É obrigatório informar o nome da empresa")
     private String nome;
 
-    @Column(name = "CNPJ")
+    @NotBlank(message = "É obrigatório informar o CNPJ da empresa")
+    @Size(max = 14, min = 14, message = "O CNPJ deve conter 14 digitos")
     private String cnpj;
 
-    @OneToMany(mappedBy = "empresa")
     private List<Funcionario> funcionarios;
 
 }

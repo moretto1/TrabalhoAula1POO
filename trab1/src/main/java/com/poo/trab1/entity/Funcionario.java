@@ -1,10 +1,19 @@
 package com.poo.trab1.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "FUNCIONARIO")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Funcionario {
 
     @Id
@@ -28,47 +37,4 @@ public class Funcionario {
     @JoinColumn(name = "ID_DEPARTAMENTO")
     private Departamento departamento;
 
-    public Funcionario() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Double getSalario() {
-        return salario;
-    }
-
-    public void setSalario(Double salario) {
-        this.salario = salario;
-    }
-
-    public LocalDate getDtAdmissao() {
-        return dtAdmissao;
-    }
-
-    public void setDtAdmissao(LocalDate dtAdmissao) {
-        this.dtAdmissao = dtAdmissao;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
 }
