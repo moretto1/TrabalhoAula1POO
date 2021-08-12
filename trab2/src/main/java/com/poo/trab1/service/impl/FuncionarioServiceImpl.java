@@ -1,10 +1,10 @@
 package com.poo.trab1.service.impl;
 
 import com.poo.trab1.dto.FuncionarioDto;
-import com.poo.trab1.entity.Departamento;
-import com.poo.trab1.entity.Funcionario;
+import com.poo.trab1.entity.*;
 import com.poo.trab1.factory.FuncionarioFactory;
 import com.poo.trab1.repository.DepartamentoRepository;
+import com.poo.trab1.repository.EmpresaRepository;
 import com.poo.trab1.repository.FuncionarioRepository;
 import com.poo.trab1.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +26,32 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Autowired
     private DepartamentoRepository departamentoRepository;
 
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
     @Override
-    public List<FuncionarioDto> create(List<FuncionarioDto> funcionarioDtoList) {
+    public void create(List<FuncionarioDto> funcionarioDtoList) {
         try {
             var funcionarios = funcionarioDtoList.stream()
-                    .map(FuncionarioFactory::buildEntityFromDto)
+                    .map(funcionarioDto ->  {
+                        Funcionario funcionario;
+                        switch (funcionarioDto.getCargo()) {
+                            case "G":
+                                funcionario = FuncionarioFactory.buildGerenteEntityFromDto(funcionarioDto);
+                                return funcionario;
+                            case "A":
+                                funcionario = FuncionarioFactory.buildAnalistaEntityFromDto(funcionarioDto);
+                                return funcionario;
+                            case "T":
+                                funcionario = FuncionarioFactory.buildTecnicoEntityFromDto(funcionarioDto);
+                                return funcionario;
+                            default:
+                                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cargo inválido");
+                        }
+                    })
                     .peek(funcionario -> funcionario.setDtAdmissao(LocalDate.now()))
                     .collect(Collectors.toList());
             funcionarios = funcionarioRepository.saveAll(funcionarios);
-            return funcionarios.stream()
-                    .map(FuncionarioFactory::buildDtoFromEntity)
-                    .collect(Collectors.toList());
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -46,18 +61,21 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public boolean aumentaSalario(Long idDepartamento) {
+    public boolean aumentaSalario(Long idEmpresa, Long idDepartamento) {
+        Optional<Empresa> empresaOpt = empresaRepository.findById(idEmpresa);
+        if(empresaOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Empresa não encontrado");
+        }
+
         Optional<Departamento> departamentoOpt = departamentoRepository.findById(idDepartamento);
         if(departamentoOpt.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não encontrado");
         }
 
         List<Funcionario> funcionarioList = funcionarioRepository.findAllByDepartamento(departamentoOpt.get());
-         funcionarioList.forEach(funcionario ->
-                 funcionario.setSalario(funcionario.getSalario() + funcionario.getSalario() * 0.10)
-         );
+         funcionarioList.forEach(Funcionario::aumentaSalario);
          funcionarioRepository.saveAll(funcionarioList);
-        return true;
+         return true;
     }
 
 }

@@ -12,11 +12,6 @@ public class EmpresaFactory {
                 .id(empresaDto.getId())
                 .nome(empresaDto.getNome())
                 .cnpj(empresaDto.getCnpj())
-                .funcionarios(
-                        empresaDto.getFuncionarios().stream()
-                                .map(FuncionarioFactory::buildEntityFromDto)
-                                .collect(Collectors.toList())
-                )
                 .build();
     }
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface EmpresaService {
 
-    EmpresaDto create(EmpresaDto empresaDto);
+    void create(EmpresaDto empresaDto);
 
     List<EmpresaDto> getAllEmpresas();
 

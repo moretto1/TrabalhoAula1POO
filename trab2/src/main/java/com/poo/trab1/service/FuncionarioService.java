@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface FuncionarioService {
 
-    List<FuncionarioDto> create(List<FuncionarioDto> funcionarioDtoList);
+    void create(List<FuncionarioDto> funcionarioDtoList);
 
-    boolean aumentaSalario(Long idDepartamento);
+    boolean aumentaSalario(Long idEmpresa, Long idDepartamento);
 
 }

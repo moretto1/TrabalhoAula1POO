@@ -19,12 +19,13 @@ public class FuncionarioController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid List<FuncionarioDto> funcionarioDtoList) {
-        return ResponseEntity.ok(this.funcionarioService.create(funcionarioDtoList));
+        this.funcionarioService.create(funcionarioDtoList);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PatchMapping(value = "/departamento/{idDepartamento}")
-    public ResponseEntity<?> aumentaSalario(@PathVariable Long idDepartamento) {
-        if(funcionarioService.aumentaSalario(idDepartamento)) {
+    @PatchMapping(value = "/empresas/{idEmpresa}/departamento/{idDepartamento}")
+    public ResponseEntity<?> aumentaSalario(@PathVariable Long idEmpresa, @PathVariable Long idDepartamento) {
+        if(funcionarioService.aumentaSalario(idEmpresa, idDepartamento)) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.internalServerError().build();

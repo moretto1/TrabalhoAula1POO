@@ -20,10 +20,9 @@ public class EmpresaServiceImpl implements EmpresaService {
     private EmpresaRepository empresaRepository;
 
     @Override
-    public EmpresaDto create(EmpresaDto empresaDto) {
+    public void create(EmpresaDto empresaDto) {
         Empresa empresa = EmpresaFactory.buildEntityFromDto(empresaDto);
-        empresa = empresaRepository.save(empresa);
-        return EmpresaFactory.buildDtoFromEntity(empresa);
+        empresaRepository.save(empresa);
     }
 
     @Override

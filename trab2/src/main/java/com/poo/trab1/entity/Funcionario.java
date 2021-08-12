@@ -9,15 +9,13 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "FUNCIONARIO")
-@Data
-@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NoArgsConstructor
-@Builder
+@Data
 public class Funcionario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @Column(name = "NOME")
@@ -36,5 +34,12 @@ public class Funcionario {
     @ManyToOne
     @JoinColumn(name = "ID_DEPARTAMENTO")
     private Departamento departamento;
+
+    @Column(name = "DTYPE", insertable = false, updatable = false)
+    private String dtype;
+
+    public void aumentaSalario() {
+        this.setSalario(this.getSalario() + this.getSalario() * 0.10);
+    }
 
 }

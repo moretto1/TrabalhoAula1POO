@@ -19,7 +19,8 @@ public class EmpresaController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid EmpresaDto empresaDto) {
-        return ResponseEntity.ok(empresaService.create(empresaDto));
+        empresaService.create(empresaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping

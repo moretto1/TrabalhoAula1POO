@@ -1,5 +1,6 @@
 package com.poo.trab1.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poo.trab1.entity.Departamento;
 import com.poo.trab1.entity.Empresa;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,7 @@ public class FuncionarioDto {
 
     @NotNull(message = "É necessário informar o departamento do funcionário")
     private DepartamentoDto departamento;
+
+    private String cargo;
 
 }
