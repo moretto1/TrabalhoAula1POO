@@ -23,7 +23,4 @@ public class Departamento {
     @Column(name = "NOME")
     private String nome;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "departamento")
-    private List<Funcionario> funcionarios;
-
 }

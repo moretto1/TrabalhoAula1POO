@@ -16,6 +16,5 @@ public class DepartamentoDto {
 
     private Long id;
     private String nome;
-    private List<Funcionario> funcionarios;
 
 }

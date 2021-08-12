@@ -12,7 +12,7 @@ public class FuncionarioFactory {
                 .salario(funcionarioDto.getSalario())
                 .dtAdmissao(funcionarioDto.getDtAdmissao())
                 .empresa(EmpresaFactory.buildEntityFromDto(funcionarioDto.getEmpresa()))
-                .departamento(DepartamentoFacotry.buildEntityFromDto(funcionarioDto.getDepartamento()))
+                .departamento(DepartamentoFactory.buildEntityFromDto(funcionarioDto.getDepartamento()))
                 .build();
     }
 
@@ -22,7 +22,7 @@ public class FuncionarioFactory {
                 .nome(funcionario.getNome())
                 .salario(funcionario.getSalario())
                 .dtAdmissao(funcionario.getDtAdmissao())
-                .departamento(DepartamentoFacotry.buildDtoFromEntity(funcionario.getDepartamento()))
+                .departamento(DepartamentoFactory.buildDtoFromEntity(funcionario.getDepartamento()))
                 .build();
     }
 
