@@ -25,6 +25,6 @@ public class EmpresaDto {
     @Size(max = 14, min = 14, message = "O CNPJ deve conter 14 digitos")
     private String cnpj;
 
-    private List<Funcionario> funcionarios;
+    private List<FuncionarioDto> funcionarios;
 
 }

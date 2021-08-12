@@ -27,7 +27,7 @@ public class Empresa {
     @Column(name = "CNPJ")
     private String cnpj;
 
-    @OneToMany(mappedBy = "empresa")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "empresa")
     private List<Funcionario> funcionarios;
 
 }

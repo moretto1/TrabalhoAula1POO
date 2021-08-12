@@ -3,6 +3,8 @@ package com.poo.trab1.factory;
 import com.poo.trab1.dto.EmpresaDto;
 import com.poo.trab1.entity.Empresa;
 
+import java.util.stream.Collectors;
+
 public class EmpresaFactory {
 
     public static Empresa buildEntityFromDto(EmpresaDto empresaDto) {
@@ -10,7 +12,11 @@ public class EmpresaFactory {
                 .id(empresaDto.getId())
                 .nome(empresaDto.getNome())
                 .cnpj(empresaDto.getCnpj())
-                .funcionarios(empresaDto.getFuncionarios())
+                .funcionarios(
+                        empresaDto.getFuncionarios().stream()
+                                .map(FuncionarioFactory::buildEntityFromDto)
+                                .collect(Collectors.toList())
+                )
                 .build();
     }
 
@@ -19,7 +25,11 @@ public class EmpresaFactory {
                 .id(empresa.getId())
                 .nome(empresa.getNome())
                 .cnpj(empresa.getCnpj())
-                .funcionarios(empresa.getFuncionarios())
+                .funcionarios(
+                        empresa.getFuncionarios().stream()
+                                .map(FuncionarioFactory::buildDtoFromEntity)
+                                .collect(Collectors.toList())
+                )
                 .build();
     }
 

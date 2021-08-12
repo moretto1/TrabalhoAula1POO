@@ -29,7 +29,7 @@ public class Funcionario {
     @Column(name = "DT_ADMISSAO")
     private LocalDate dtAdmissao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EMPRESA")
     private Empresa empresa;
 
